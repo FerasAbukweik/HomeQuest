@@ -76,12 +76,11 @@ namespace WebApplication8.Controllers
             //);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("DashBoardData")]
         public async Task<ActionResult<UserDashBoardData>> DashBoardData()
         {
             var userId = UserUtils.GetUserId(User);
-
             var lastMonthData = DateTime.UtcNow.AddMonths(-1);
 
             var dashBoardData = await _data.Users
@@ -94,12 +93,16 @@ namespace WebApplication8.Controllers
                         address = p.address,
                         id = p.id,
                         imageUrl = p.imagesUrls.FirstOrDefault() ?? "",
-                        isActive = p.isActive,
+                        state = p.state,
                         price = p.price,
                         title = p.title,
                     }).ToList(),
-                    numberOfActiveListings = u.propertiesListings.Count(p => p.isActive),
-                    numOfActiveListingsLastMonth = u.propertiesListings.Count(p => (p.isActive && p.latestActiveDate >= lastMonthData)),
+                    numberOfActiveListings = u.propertiesListings.Count(p => (p.state & (int)PropertyStateEnum.active) == (int)PropertyStateEnum.active),
+                    numOfActiveListingsLastMonth = u.propertiesListings
+                    .Count(p => (
+                        (p.state & (int)PropertyStateEnum.active) == (int)PropertyStateEnum.active &&
+                        p.latestActiveDate >= lastMonthData
+                    )),
                     totalViews = u.PropertiesViews.Count(),
                     totalViewsLastMonth = u.PropertiesViews.Count(pv=>pv.viewedAt >= lastMonthData)
                 }).FirstOrDefaultAsync();

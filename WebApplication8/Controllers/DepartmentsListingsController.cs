@@ -25,8 +25,8 @@ namespace WebApplication8.Controllers
         }
 
         [Authorize]
-        [HttpPost("AddProperty")]
-        public async Task<ActionResult> AddProperty([FromBody] AddPropertyListingDTO newProperty)
+        [HttpPost("Add")]
+        public async Task<ActionResult> Add([FromBody] AddPropertyListingDTO newProperty)
         {
             var toAddProperty = new PropertyListing
             {
@@ -36,8 +36,7 @@ namespace WebApplication8.Controllers
                 address = newProperty.address,
                 imagesUrls = newProperty.imageUrls,
                 price = newProperty.price,
-                state = newProperty.propertyState,
-                isActive = false,
+                state = newProperty.propertyState + (int)PropertyStateEnum.pending,
                 createdAt = DateTime.UtcNow,
                 propertyType = newProperty.propertyType,
                 userId = UserUtils.GetUserId(User)
@@ -45,14 +44,14 @@ namespace WebApplication8.Controllers
 
             _Data.PropertiesListings.Add(toAddProperty);
             await _Data.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
         [Authorize]
         [HttpPut("Edit")]
         public async Task<ActionResult> Edit([FromBody] EditPropertyListingDTO editData)
         {
-            if(editData.propertyState == PropertyStateEnum.Rejected)
+            if(EnumUtils.isSelected(editData.propertyState , (int)PropertyStateEnum.Rejected))
             {
                 return Unauthorized("users cannt change property state to rejected");
             }
@@ -70,90 +69,11 @@ namespace WebApplication8.Controllers
             existingProperty.address = editData.address ?? existingProperty.address;
             existingProperty.imagesUrls = editData.imageUrls ?? existingProperty.imagesUrls;
             existingProperty.price = editData.price ?? existingProperty.price;
-            existingProperty.isActive = editData.isActive ?? existingProperty.isActive;
-            existingProperty.propertyType = editData.propertyType ?? existingProperty.propertyType;
-            existingProperty.state = editData.propertyState ?? existingProperty.state;
+            existingProperty.propertyType = editData.propertyType;
+            existingProperty.state = editData.propertyState;
 
             await _Data.SaveChangesAsync();
             return Ok();
-        }
-
-        [Authorize]
-        [HttpGet("Filter")]
-        public async Task<ActionResult<PropertyCardInfinitScrollResponseDTO>> Filter([FromQuery] FilterUserPropertiesDTO data)
-        {
-            var userId = UserUtils.GetUserId(User);
-
-            var selectedStates = Enum.GetValues(typeof(PropertyStateEnum))
-                                     .Cast<PropertyStateEnum>()
-                                     .Where(s => EnumUtils.isSelected((int)data.filterData.propertyState, (int)s))
-                                     .ToList();
-
-            var selectedTypes = Enum.GetValues(typeof(PropertyTypesEnum))
-                                    .Cast<PropertyTypesEnum>()
-                                    .Where(t => EnumUtils.isSelected((int)data.filterData.propertyType, (int)t))
-                                    .ToList();
-
-
-            var query = _Data.PropertiesListings.AsQueryable();
-
-            query = query.Where(q => q.userId == userId);
-
-            if (selectedStates.Any())
-                query = query.Where(q => selectedStates.Contains(q.state));
-
-            if (selectedTypes.Any())
-                query = query.Where(q => selectedTypes.Contains(q.propertyType));
-
-            if (data.filterData.minPrice != null)
-                query = query.Where(p => p.price >= data.filterData.minPrice);
-
-            if (data.filterData.maxPrice != null)
-                query = query.Where(p => p.price <= data.filterData.maxPrice);
-
-            if (data.filterData.isActive != null)
-                query = query.Where(p => p.isActive == data.filterData.isActive);
-
-            if (data.filterData.createdFrom != null)
-                query = query.Where(p => p.createdAt >= data.filterData.createdFrom);
-
-            if (data.filterData.createdTo != null)
-                query = query.Where(p => p.createdAt <= data.filterData.createdTo);
-
-            if (data.filterData.sortByDate!=null && data.filterData.sortByDate == true)
-                query = query.OrderByDescending(d => d.createdAt);
-
-            if (data.filterData.isPending != null)
-                query = query.Where(q=>q.isPending == data.filterData.isPending);
-
-            if (data.filterData.title != null)
-                query = query.Where(d => d.title.ToUpper().Contains(data.filterData.title.ToUpper()));
-
-            long totalPropertys = await query.CountAsync();
-            int alreadyTaken = data.infinitScrollData.alreadyTaken;
-            int take = data.infinitScrollData.sectionSize;
-            var currSectionPropertys = await query
-                .Skip(alreadyTaken)
-                .Take(take)
-                .Select(d => new GuestPropertyCardDataDTO
-                {
-                    id = d.id,
-                    title = d.title,
-                    address = d.address,
-                    price = d.price,
-                    imageUrl = d.imagesUrls[0] ?? "noImage"
-                })
-                .ToListAsync();
-            int currentTaken = currSectionPropertys.Count();
-
-            var response = new PropertyCardInfinitScrollResponseDTO
-            {
-                propertiesListings = currSectionPropertys,
-                currTaken = currentTaken + alreadyTaken,
-                isMoreAvaiable = (alreadyTaken + currentTaken) < totalPropertys,
-            };
-
-            return Ok(response);
         }
 
 
@@ -177,33 +97,25 @@ namespace WebApplication8.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("GetGuestPropertys")]
-        public async Task<ActionResult<PropertyCardInfinitScrollResponseDTO>> FilterGuestPropertys(
-            [FromBody] FilterGuestPropertiesDTO  data)
+        [HttpPost("FilterGuestProperties")]
+        public async Task<ActionResult<GuestPropertyCardInfinitScrollResponseDTO>> FilterGuestProperties(
+            [FromBody] FilterPropertiesWithInfinitScrollDataDTO  data)
         {
             var query = _Data.PropertiesListings
                 .Where(p =>
-                    //p.isActive == true &&
-                    //p.isPending == false &&
-                    p.state != PropertyStateEnum.Sold &&
-                    p.state != PropertyStateEnum.Rejected
-                );
+                    (
+                       (p.state & (int)PropertyStateEnum.active) == (int)PropertyStateEnum.active &&
+                       (p.state & (int)PropertyStateEnum.pending) != (int)PropertyStateEnum.pending) &&
+                        p.state != (int)PropertyStateEnum.Sold &&
+                        p.state != (int)PropertyStateEnum.Rejected
+                    );
 
-            var selectedStates = Enum.GetValues(typeof(PropertyStateEnum))
-                                     .Cast<PropertyStateEnum>()
-                                     .Where(s => EnumUtils.isSelected((int)data.filterData.propertyState, (int)s))
-                                     .ToList();
 
-            var selectedTypes = Enum.GetValues(typeof(PropertyTypesEnum))
-                                    .Cast<PropertyTypesEnum>()
-                                    .Where(t => EnumUtils.isSelected((int)data.filterData.propertyType, (int)t))
-                                    .ToList();
+            if (data.filterData.propertyState != 0)
+                query = query.Where(q => (data.filterData.propertyState & q.state) == q.state);
 
-            if (selectedStates.Any())
-                query = query.Where(q => selectedStates.Contains(q.state));
-
-            if (selectedTypes.Any())
-                query = query.Where(q => selectedTypes.Contains(q.propertyType));
+            if (data.filterData.propertyType != 0)
+                query = query.Where(q => (data.filterData.propertyType & q.propertyType) == q.propertyType);
 
             if (data.filterData.minPrice != null)
                 query = query.Where(p => p.price >= data.filterData.minPrice);
@@ -240,7 +152,66 @@ namespace WebApplication8.Controllers
                 .ToListAsync();
             int currentTaken = currSectionPropertys.Count();
 
-            var response = new PropertyCardInfinitScrollResponseDTO
+            var response = new GuestPropertyCardInfinitScrollResponseDTO
+            {
+                propertiesListings = currSectionPropertys,
+                currTaken = alreadyTaken + currentTaken,
+                isMoreAvaiable = (alreadyTaken + currentTaken) < totalPropertys,
+            };
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPost("FitlerUserProperties")]
+        public async Task<ActionResult<UserPropertiesInfnitscrollResponseDTO>> FitlerUserProperties(
+           [FromBody] FilterPropertiesWithInfinitScrollDataDTO data)
+        {
+            var query = _Data.PropertiesListings.AsQueryable();
+
+            if (data.filterData.propertyState != 0)
+                query = query.Where(q => q.state != 0 && ((data.filterData.propertyState & q.state) == q.state));
+
+            if (data.filterData.propertyType != 0)
+                query = query.Where(q => q.state != 0 && ((data.filterData.propertyType & q.propertyType) == q.propertyType));
+
+            if (data.filterData.minPrice != null)
+                query = query.Where(p => p.price >= data.filterData.minPrice);
+
+            if (data.filterData.maxPrice != null)
+                query = query.Where(p => p.price <= data.filterData.maxPrice);
+
+            if (data.filterData.createdFrom != null)
+                query = query.Where(p => p.createdAt >= data.filterData.createdFrom);
+
+            if (data.filterData.createdTo != null)
+                query = query.Where(p => p.createdAt <= data.filterData.createdTo);
+
+            if (data.filterData.sortByDate != null && data.filterData.sortByDate == true)
+                query = query.OrderByDescending(d => d.createdAt);
+
+            if (data.filterData.title != null)
+                query = query.Where(d => d.title.ToUpper().Contains(data.filterData.title.ToUpper()));
+
+            long totalPropertys = await query.CountAsync();
+            int alreadyTaken = data.infinitScrollData.alreadyTaken;
+            int take = data.infinitScrollData.sectionSize;
+            var currSectionPropertys = await query
+                .Skip(alreadyTaken)
+                .Take(take)
+                .Select(d => new UserPropertyCardDataDTO
+                {
+                    id = d.id,
+                    title = d.title,
+                    address = d.address,
+                    price = d.price,
+                    imageUrl = d.imagesUrls[0] ?? "noImage",
+                    state = d.state,
+                })
+                .ToListAsync();
+            int currentTaken = currSectionPropertys.Count();
+
+            var response = new UserPropertiesInfnitscrollResponseDTO
             {
                 propertiesListings = currSectionPropertys,
                 currTaken = alreadyTaken + currentTaken,
@@ -268,34 +239,35 @@ namespace WebApplication8.Controllers
                     createdAt = p.createdAt,
                     propertyType = p.propertyType,
                     userId = p.userId,
-                    isPending = p.isPending,
                 }).FirstOrDefaultAsync();
 
             if (Property == null)
                 return NotFound("Property Not Found");
-            if(Property.isPending == true)
+            if (EnumUtils.isSelected(Property.state, (int)PropertyStateEnum.pending))
                 return BadRequest("admins didn't approve this property yet");
-            if (Property.state == PropertyStateEnum.Rejected)
+            if (EnumUtils.isSelected(Property.state , (int)PropertyStateEnum.Rejected))
                 return BadRequest("property was rejected");
 
 
-            var watchingUser = UserUtils.GetUserId(User);
-
-            var alreadyViewed = await _Data.PropertyViews
-            .AnyAsync(pv => pv.propertyLisingId == id && pv.userId == watchingUser);
-
-            if (!alreadyViewed)
+            var watchingUserIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Guid.TryParse(watchingUserIdString, out var watchingUserId))
             {
+                var alreadyViewed = await _Data.PropertyViews
+                .AnyAsync(pv => pv.propertyLisingId == id && pv.userId == watchingUserId);
 
-                var newView = new PropertyView
+                if (!alreadyViewed)
                 {
-                    id = Guid.NewGuid(),
-                    propertyLisingId = id,
-                    userId = watchingUser,
-                };
 
-                _Data.PropertyViews.Add(newView);
-                await _Data.SaveChangesAsync();
+                    var newView = new PropertyView
+                    {
+                        id = Guid.NewGuid(),
+                        propertyLisingId = id,
+                        userId = watchingUserId,
+                    };
+
+                    _Data.PropertyViews.Add(newView);
+                    await _Data.SaveChangesAsync();
+                }
             }
 
             var response = new PropertyDTO
@@ -313,6 +285,33 @@ namespace WebApplication8.Controllers
             };
 
             return Ok(response);
+        }
+
+
+        [Authorize]
+        [HttpPut("toggleState/{id}")]
+        public async Task<ActionResult> toggleState(Guid id , SetActiveDTO data)
+        {
+            var property = await _Data.PropertiesListings
+                .Where(p => p.id == id)
+                .FirstOrDefaultAsync();
+
+            var userId = UserUtils.GetUserId(User);
+            var userRole = UserUtils.GetUserClaim(User , ClaimTypes.Role);
+
+            if (property == null)
+                return NotFound("No Property Was Found");
+            if (EnumUtils.isSelected((int)property.state, (int)PropertyStateEnum.pending))
+                return BadRequest("Property Ain't Approved From Admins");
+            if (property.userId != userId && int.Parse(userRole) != (int)UserRoles.Admin)
+                return Unauthorized("Unauthorized");
+
+
+            property.state =  data.newState;
+            await _Data.SaveChangesAsync();
+
+
+            return NoContent();
         }
     }
 }

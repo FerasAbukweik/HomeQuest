@@ -8,8 +8,7 @@
         public string? address { get; set; }
         public List<string>? imageUrls { get; set; }
         public decimal? price { get; set; }
-        public Boolean? isActive { get; set; }
-        public PropertyTypesEnum? propertyType { get; set; }
-        public PropertyStateEnum? propertyState { get; set; }
+        public required int propertyType { get; set; }
+        public required int propertyState { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace WebApplication8.DTOs.PropertyListingDTOs
         public required decimal price { get; set; }
         public required DateTime createdAt { get; set; }
         public Guid userId { get; set; }
-        public required PropertyTypesEnum propertyType { get; set; }
-        public required PropertyStateEnum state { get; set; }
+        public required int propertyType { get; set; }
+        public required int state { get; set; }
     }
 }

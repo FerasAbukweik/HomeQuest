@@ -3,5 +3,7 @@
     ForSale = 1,
     ForRent = 2,
     Sold = 4,
-    Rejected = 8
+    Rejected = 8,
+    pending = 16,
+    active = 32,
 };

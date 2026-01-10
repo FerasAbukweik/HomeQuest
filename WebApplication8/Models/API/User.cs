@@ -7,12 +7,19 @@ namespace WebApplication8.Models.API
     {
         [Key]
         public Guid id { get; set; }
-        public required string userName { get; set; }
-        public required string passwordHash { get; set; }
-        public required string email { get; set; }
-        public required string phoneNumber { get; set; }
-        public required string firstName { get; set; }
-        public required string lastName { get; set; }
+        [Required(ErrorMessage = "userName is Required")]
+        public string? userName { get; set; }
+        [Required(ErrorMessage = "passwordHash is Required")]
+        public string? passwordHash { get; set; }
+        [Required(ErrorMessage = "email is Required")]
+        public string? email { get; set; }
+        [Required(ErrorMessage = "phoneNumber is Required")]
+        public string? phoneNumber { get; set; }
+        [Required(ErrorMessage = "firstName is Required")]
+        public string? firstName { get; set; }
+        [Required(ErrorMessage = "lastName is Required")]
+        public string? lastName { get; set; }
+        [Required(ErrorMessage = "role is Required")]
         public UserRoles role { get; set; } = UserRoles.User;
         public List<RefreshToken> refreshTokens { get; set; } = new List<RefreshToken>();
         public List<PropertyListing> propertiesListings { get; set; } = new List<PropertyListing>();

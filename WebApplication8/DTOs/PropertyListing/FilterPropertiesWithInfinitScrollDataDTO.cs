@@ -3,9 +3,9 @@ using WebApplication8.DTOs.infinitScrollDTOs;
 
 namespace WebApplication8.DTOs.PropertyListing
 {
-    public class FilterGuestPropertiesDTO
+    public class FilterPropertiesWithInfinitScrollDataDTO
     {
-        public required GuestFilterDataDTO filterData { get; set; }
+        public required FilterPropertiesDataDTO filterData { get; set; }
         public required InfinitScrollDTO infinitScrollData { get; set; }
     }
 }

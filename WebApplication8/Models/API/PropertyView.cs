@@ -1,9 +1,11 @@
 ﻿using Azure.Core.Pipeline;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication8.Models.API
 {
     public class PropertyView
     {
+        [Key]
         public Guid id { get; set; }
         public Guid userId { get; set; }
         public User User { get; set; }

@@ -12,4 +12,12 @@ public class UserUtils
         }
         return userId;
     }
+
+    public static string GetUserClaim(ClaimsPrincipal user , string claim)
+    {
+        var userClaim = user.FindFirstValue(claim);
+        if (string.IsNullOrEmpty(userClaim))
+            throw new UnauthorizedAccessException("Invalid token");
+        return userClaim;
+    }
 }

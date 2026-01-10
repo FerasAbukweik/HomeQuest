@@ -1,6 +1,6 @@
 ﻿namespace WebApplication8.DTOs.PropertyListing
 {
-    public class GuestFilterDataDTO
+    public class FilterPropertiesDataDTO
     {
         public decimal? minPrice { get; set; }
         public decimal? maxPrice { get; set; }

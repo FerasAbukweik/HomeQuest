@@ -121,5 +121,16 @@ namespace WebApplication8.Services.Auth
 
             return new JwtSecurityTokenHandler().WriteToken(tokenSettings);
         }
+
+        public async Task LogoutAsync(string refreshToken)
+        {
+            if (refreshToken == null) return;
+            var toRemoveRefreshToken = _Data.RefreshTokens.FirstOrDefault(r => r.refreshToken == refreshToken);
+            if(toRemoveRefreshToken != null)
+            {
+                _Data.RefreshTokens.Remove(toRemoveRefreshToken);
+                await _Data.SaveChangesAsync();
+            }
+        }
     }
 }

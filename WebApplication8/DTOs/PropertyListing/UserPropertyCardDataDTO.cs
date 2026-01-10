@@ -2,6 +2,6 @@
 {
     public class UserPropertyCardDataDTO : GuestPropertyCardDataDTO
     {
-        public Boolean isActive { get; set; }
+        public int state{ get; set; }
     }
 }

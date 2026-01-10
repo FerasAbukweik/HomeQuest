@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication8.Data;
@@ -32,17 +33,6 @@ namespace WebApplication8.Controllers
             return Ok();
         }
 
-        [Authorize]
-        [HttpPost("Logout")]
-        public IActionResult Logout()
-        {
-            Response.Cookies.Delete(TokenUtils.AccessToken);
-            Response.Cookies.Delete(TokenUtils.RefreshToken);
-
-            return Ok();
-        }
-
-
         [AllowAnonymous]
         [HttpPost("RefreshTokens")]
         public async Task<ActionResult<string>> RefreshTokens()
@@ -53,7 +43,19 @@ namespace WebApplication8.Controllers
             var tokens = await _authService.RefreshTokensAsync(refreshToken);
             CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.RefreshToken, tokens.refreshToken, DateTime.UtcNow.AddDays(30));
             CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.AccessToken, tokens.accessToken, DateTime.UtcNow.AddMinutes(15));
-            return Ok(); 
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("Logout")]
+        public async Task<ActionResult> Logout()
+        {
+            var refreshToken = Request.Cookies[TokenUtils.RefreshToken];
+            if (refreshToken != null)
+                await _authService.LogoutAsync(refreshToken);
+            CookiesUtils.SaveToHTTPOnlyCookie(Response, TokenUtils.RefreshToken, "", DateTime.UtcNow);
+            CookiesUtils.SaveToHTTPOnlyCookie(Response, TokenUtils.AccessToken, "", DateTime.UtcNow);
+            return NoContent();
         }
     }
 }
