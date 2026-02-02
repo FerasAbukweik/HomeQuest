@@ -1,0 +1,132 @@
+.mainContianer{
+    padding: 30px;
+    width: 100%;
+    height: fit-content;
+
+    container-type: inline-size;
+    container-name: mainContainer;
+}
+.column{
+    display: flex;
+    flex-direction: column;
+}
+.mainContianer input{
+    max-width: 500px;
+}
+.header{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.header>.column{
+    flex: 1;
+    gap: 10px;
+}
+.header .addPropertyText{
+    font-size: 1.7rem;
+    color: white;
+    font-weight: bold;
+}
+.header .subText{
+    color: #93aebb;
+}
+.propertyDetailstext{
+    margin-bottom: 0 !important;
+}
+.upperRow{
+    margin-bottom: 10px;
+}
+.lowerRow{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 15px;
+    margin-bottom: 15px;
+}
+.propertyTypeInfo .selectHoustType{
+    padding: 7px;
+}
+.propertyTypeInfo{
+    min-width: calc(50% - 10px) !important;
+}
+.bathsBedRooms{
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+.topContainer{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.priceInfo input{
+    width: calc(50% - 10px);
+}
+.dragAndDropArea {
+    width: 100%;
+    height: 300px;
+    border: 2px dashed #4c6b7f;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #11232c;
+    padding: 50px;
+}
+.dragAndDropArea .uploadImg {
+    object-fit: cover;
+    width: 150px;
+    opacity: 0.8;
+}
+.uploadAFile {
+    display: none;
+}
+.uploadText{
+    font-size: 15px;
+    cursor: pointer;
+    color: #075a9c;
+}
+.uploadText:hover {
+    text-decoration: underline;
+}
+.uploadAFileText {
+    color: #89a4b0;
+    margin-left: 5px;
+    font-size: 15px;
+}
+.Added{
+    position: fixed;
+    transform: translate(-50% , -50%);
+    left: 50%;
+    top: 50%;
+    color: white;
+    width: 80%;
+    text-align: center;
+    font-size: 2rem;
+    animation: intery 0.7s ease;
+}
+@container mainContainer (max-width: 360px) {
+    .bathsBedRooms {
+        flex-wrap: wrap;
+    }
+}
+
+@container mainContainer (max-width:360px){
+    .header .addBtn{
+        font-size: 0.7rem;
+        padding: 11px 10px;
+    }
+}
+
+@keyframes intery {
+    0%{
+        transform: translate(-50% , -50%) scale(0.7);
+    }
+    100%{
+        transform: translate(-50% , -50%) scale(1);
+    }
+}

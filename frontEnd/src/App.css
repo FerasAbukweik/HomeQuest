@@ -1,0 +1,249 @@
+.logoIcon{
+    color: #168ac3;
+    font-size: 2rem;
+}
+
+.logo-homequest-text{
+    font-size: 1.5rem;
+    margin-left: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.main-container-for-centered-components{
+    max-width: 600px;
+    width: 100%;
+    height: fit-content;
+    padding: 40px;
+    background: linear-gradient(to right ,#252e33 70% , #28343a);
+    border-radius: 1rem;
+}
+
+.input-text{
+    color: white;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    margin-top: 17px;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+}
+
+.row{
+  display: flex;
+}
+
+.default-button{
+    height: 45px;
+    border-radius: 0.4rem;
+    outline: none;
+    border: none;
+    background-color: #13a4ec;
+    color: white;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.wrong-input{
+    color: red;
+    margin-top: 7px;
+    font-size: 0.95rem;
+}
+
+.redInputBorder{
+    border: 2px solid rgb(204, 16, 16) !important;
+}
+
+.default-input{
+    height: 35px;
+    width: 100%;
+    outline: none;
+    border: 2px solid #344256;
+    border-radius: 0.4rem;
+    background-color: #19222d;
+    padding: 0 10px;
+    color: #546377;
+    font-size: 1rem;
+}
+
+.default-input::placeholder{
+    color: #546377;
+}
+
+.small-btn{
+    padding: 9px 17px;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: none;
+}
+
+html:has(body #root .bgImage) , #root:has(.bgImage){
+    background-image: url(./assets/images/login-signup-bg.png);
+    background-size: cover;
+}
+
+.center-element{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.greenBtn{
+    width: fit-content;
+    height: fit-content;
+    padding: 11px 16px;
+    background-color: #2e8b57;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.7rem;
+    cursor: pointer;
+}
+
+.greenBtn:hover{
+    opacity: 0.8;
+    box-shadow: 0px 0px 100px 5px rgba(0, 0, 0, 0.05);
+}
+
+.switch {
+  min-width: 48px;
+  max-width: 48px;
+  height: 28px;
+  background-color: #374151;
+  border-radius: 24px;
+  position: relative;
+  appearance: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: 0.3s;
+}
+
+.switch:checked {
+  background-color: #005a9b;
+}
+
+.switch:checked::before {
+  transform: translateX(21px);
+}
+
+.smallSwitch{
+    appearance: none;
+    width: 31px;
+    height: 31px;
+    cursor: pointer;
+    position: relative;
+    background-color: #2f2c34;
+    border-radius: 0.5rem;
+}
+
+.smallSwitch:hover{
+    opacity: 0.8;
+}
+
+.smallSwitch::after{
+    content: "";
+    width: 12px;
+    height: 6px;
+    position: absolute;
+    border: 2px solid #bc3e40;
+    border-radius: 0.4rem;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%,50%);
+}
+
+.smallSwitch::before{
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: red;
+    bottom: 50%;
+    right: calc(50% + 2px);
+    transform: translate(50%,50%);
+    transition: right 0.2s ease;
+}
+
+.smallSwitch:checked.smallSwitch::before{
+    right: calc(50% - 2px);
+}
+
+.smallSwitch:checked{
+    background-color: #22313a;
+}
+
+.smallSwitch:checked.smallSwitch::after{
+    border-color: #525c68;
+}
+
+.smallSwitch:checked.smallSwitch::before{
+    background-color: #525c68;
+}
+
+.defaultContainer{
+    border: 2px solid #2c4b5a;
+    border-radius: 1rem;
+    padding: 20px;
+    background-color: #1a2a33;
+    width: 100%;
+    height: fit-content;
+}
+
+.defaultContainer>.topText{
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.title_input{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.title_input>.title{
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 7px;
+}
+
+.title_input input , .selectedInput , .defaultTextArea{
+    padding: 7px 15px;
+    outline: none;
+    border: 2px solid #2c4b5a;
+    border-radius: 0.4rem;
+    background-color: #101c22;
+    width: 100%;
+    color: white;
+    font-size: 1rem;
+}
+
+.defaultTextArea{
+    width: 100%;
+    min-height: 200px;
+    resize: none;
+    font-size: 1.2rem;
+}

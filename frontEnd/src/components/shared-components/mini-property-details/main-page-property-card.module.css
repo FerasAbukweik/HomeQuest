@@ -1,0 +1,85 @@
+.card {
+  width: 300px;
+  background-color: #233c48;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cardImage {
+  border-radius: 1rem 1rem 0 0;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  aspect-ratio: 1.16;
+}
+
+.cardBody {
+  display: grid;
+  gap: 4px;
+  padding: 5px 10px 0;
+}
+
+.cardFooter {
+  padding: 0 10px 10px;
+  margin-top: 4px;
+}
+
+.price {
+  color: #c3a337;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card:hover .detailsBtn {
+  bottom: 45px;
+}
+
+.location {
+  color: #c2c7ca;
+  font-size: 1.2rem;
+}
+
+.specs {
+  color: #4c5961;
+  font-size: 1.2rem;
+}
+
+.detailsBtn {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: -50px;
+  max-width: 200px;
+  padding: 12px 18px;
+  border-radius: 0.4rem;
+  background-color: #d4af37;
+  color: #385358;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: bottom 0.35s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 830px){
+    .card {
+    width: calc(100% - 30px);
+    margin: 0 15px;
+  }
+  .detailsBtn {
+    bottom: 45px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 460px){
+    .detailsBtn {
+    padding: 10px;
+  }
+}

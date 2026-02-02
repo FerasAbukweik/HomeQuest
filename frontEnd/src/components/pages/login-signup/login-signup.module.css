@@ -1,0 +1,141 @@
+.mainContainer{
+    max-width: 600px;
+}
+.header{
+    text-align: center;
+}
+.headerLogo{
+    margin-bottom: 25px;
+}
+.headerText{
+    font-size: 1.8rem;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.loginSignupText{
+    color: #6c7989;
+    font-weight: bold;
+    margin-bottom: 17px;
+}
+.switchLoginSignup{
+    background-color: #1e293b;
+    height: 40px;
+    border-radius: 0.4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative;
+}
+.switchLoginSignup::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: calc(50% - 10px);
+    height: calc(100% - 10px);
+    margin-left: 5px;
+    border-radius: 4px;
+    background-color: #101c22;
+    transition: left 0.7s ease;
+}
+.switchAnimation.switchLoginSignup::after{
+    left: 50%;
+}
+.selectLogin , .selectSignup{
+    text-align: center;
+    color: #cbcdce;
+    z-index: 1;
+    cursor: pointer;
+}
+.forgetPasswordText{
+    margin-top: 20px;
+    color: #149bdf;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: auto;
+}
+.footerLine{
+    background-color: #2b3744;
+    height: 2px;
+    position: relative;
+    margin-bottom: 20px;
+}
+.footerLine::after{
+    content: "Or continue with";
+    position: absolute;
+    top: -8.5px;
+    left: calc(50% - 48px);
+    color: #798799;
+    background-color: #101c22;
+    padding: 3px 6px;
+    word-spacing: 2px;
+    font-size: 0.7rem;
+}
+.optionsRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: white;
+    gap: 20px;
+}
+.footerFacebookOption,.footerGoogleOption{
+    background-color: #19222d;
+    border: 2px solid #344257;
+    border-radius: 0.4rem;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+.facebookLogo{
+    color: #1877f2;
+}
+.googleLogo{
+    color: #ef4435;
+}
+.passwordFiled{
+    width: 100%;
+    position: relative;
+}
+.passwordInput{
+    height: 44px !important;
+}
+.showHidePasswordIcon{
+    position: absolute;
+    right: 12px;
+    top: calc(50% - 8px);
+    font-size: 1rem;
+    color: #8d9cb0;
+    cursor: pointer;
+}
+
+@media (max-width: 650px){
+    .mainContainer{
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-height: 800px){
+    .mainContainer{
+        transform: scale(0.9);
+    }
+}
+
+@media (max-height: 730px){
+    .mainContainer{
+        transform: scale(0.8);
+    }
+}
+
+@media (max-height: 650px){
+    .mainContainer{
+        transform: scale(0.7);
+    }
+    .headerLogo{
+        margin-bottom: 5px;
+    }
+    .inputLable{
+        margin-top: 10px;
+    }
+}

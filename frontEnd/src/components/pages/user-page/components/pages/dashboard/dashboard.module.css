@@ -1,0 +1,90 @@
+.mainDashBoardContainer{
+    padding: 20px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+.topArea{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.mainDashBoardContainer .welcomeArea{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.mainDashBoardContainer .welcomeArea>.welcomeText{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.mainDashBoardContainer .welcomeArea>.subText{
+    color: #667f8a;
+    font-size: 0.9rem;
+}
+.topArea>.addBtn>.plusIcon{
+    padding-right: 20px;
+}
+.notifyData{
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.notifyData>.container{
+    flex: 1;
+    background-color: #1a2a33;
+    border: 2px solid #223843;
+    border-radius: 0.6rem;
+    padding: 18px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    max-width: 280px;
+    min-width: 123px;
+    height: fit-content;
+}
+.notifyData>.container>.headerText{
+    color: #cfd3d5;
+}
+.notifyData>.container>.bodyText{
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+}
+.notifyData>.container>.footerText{
+    color: #1f8b4e;
+}
+.recentActivityArea>.recentActivityText{
+    color: #fbfcfc;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 12px;
+}
+.listingsArea{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    container-type: inline-size;
+    container-name: listingsArea;
+}
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+@container listingsArea (max-width:540px){
+    :global(.globalHouseListingContainer){
+        max-width: none !important;
+    }
+}

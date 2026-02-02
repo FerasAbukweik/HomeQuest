@@ -18,10 +18,8 @@ namespace WebApplication8.Models.API
         public DateTime? latestActiveDate { get; set; } = null; 
         public required DateTime createdAt { get; set; }
         public required int propertyType {get; set;}
-
-        [ForeignKey("User")]
-        public Guid userId { get; set; }
-        public User User { get; set; }
+        public required Guid userId { get; set; }
+        public required User User { get; set; }
         public List<PropertyView> PropertiesViews { get; set; } = new List<PropertyView>();
     }
 }

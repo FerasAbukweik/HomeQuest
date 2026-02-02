@@ -1,0 +1,25 @@
+.loading {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 5px;
+}
+
+.item {
+  width: 100px;
+  height: 50px;
+  background-color: #294361;
+  animation: loading 1s ease infinite;
+}
+
+.loading .item:nth-child(1) { animation-delay: 0s; }
+.loading .item:nth-child(2) { animation-delay: 0.1s; }
+.loading .item:nth-child(3) { animation-delay: 0.2s; }
+.loading .item:nth-child(4) { animation-delay: 0.3s; }
+.loading .item:nth-child(5) { animation-delay: 0.4s; }
+.loading .item:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes loading {
+  0%   { transform: scale(0.5); opacity: 0.4; }
+  50%  { transform: scale(1);   opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0.4; }
+}

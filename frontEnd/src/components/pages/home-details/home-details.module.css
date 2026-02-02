@@ -1,0 +1,300 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 0 100px 20px;
+    width: 100%;
+    height: fit-content;
+}
+.titleData > .address{
+    font-size: 0.85rem;
+    color: #5a727e;
+}
+.titleSection{
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+    gap: 20px;
+}
+.titleSection .title{
+    flex: 1;
+    font-size: 2rem;
+    color: white;
+    margin: 10px 0;
+}
+.titleSection .subTitle{
+    color: #5a727e;
+    font-size: 0.85rem;
+}
+.titleData{
+    flex: 1;
+}
+.smallBtn{
+    height: fit-content;
+    padding: 10px 18px;
+    border-radius: 0.4rem;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #233c48;
+    cursor: pointer;
+}
+.images {
+    display: grid;
+    gap: 6px;
+    max-height: 700px;
+    margin: 0 auto;
+    justify-items: center;
+    aspect-ratio: 86 / 35;
+}
+.image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-height: 700px;
+    cursor: pointer;
+}
+.images:has(:nth-child(1)):not(:has(:nth-child(2))) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+}
+.images:has(:nth-child(1)):not(:has(:nth-child(2))) > :nth-child(1) {
+    border-radius: .5rem;
+}
+.images:has(:nth-child(2)):not(:has(:nth-child(3))) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+}
+.images:has(:nth-child(2)):not(:has(:nth-child(3))) > :nth-child(1) {
+    border-radius: .5rem 0 0 .5rem;
+}
+.images:has(:nth-child(2)):not(:has(:nth-child(3))) > :nth-child(2) {
+    border-radius: 0 .5rem .5rem 0;
+}
+.images:has(:nth-child(3)):not(:has(:nth-child(4))) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2,calc(50% - 3px));
+}
+.images:has(:nth-child(3)):not(:has(:nth-child(4))) > :nth-child(1) {
+    grid-row: span 2;
+    border-radius: .5rem 0 0 .5rem;
+}
+.images:has(:nth-child(3)):not(:has(:nth-child(4))) > :nth-child(2) {
+    border-radius: 0 .5rem 0 0;
+}
+.images:has(:nth-child(3)):not(:has(:nth-child(4))) > :nth-child(3) {
+    border-radius: 0 0 .5rem 0;
+}
+.images:has(:nth-child(4)) {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: calc(70% - 3px) calc(30% - 3px);
+}
+.images:has(:nth-child(4)) > :nth-child(1) {
+    grid-row: span 2;
+    border-radius: .5rem 0 0 .5rem;
+}
+.images:has(:nth-child(4)) > :nth-child(2) {
+    grid-column: span 2;
+    border-radius: 0 .5rem 0 0;
+}
+.images:has(:nth-child(4)) > :nth-child(3) {
+    grid-column: 2 / 3;
+}
+.images:has(:nth-child(4)) > :nth-child(4) {
+    grid-column: 3 / 4;
+    border-radius: 0 0 .5rem 0;
+}
+.images > :nth-child(n + 5){
+    display: none;
+}
+.header{
+    margin-bottom: 40px;
+}
+.body{
+    display: grid;
+    grid-template-columns: 3fr minmax(350px , 1fr);
+    row-gap: 25px;
+}
+.homeDetails{
+    display: grid;
+    margin-right: 40px;
+}
+.detailsOptions{
+    display: flex;
+    gap: 25px;
+    color: #57717e;
+    position: relative;
+    margin-bottom: 40px;
+}
+.overviewOption,.featuresOption,.virtualTourOption{
+    cursor: pointer;
+}
+.overviewOption:hover,.featuresOption:hover,.virtualTourOption:hover{
+    color: #8396a0;
+}
+.detailsOptions::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #57717e;
+    bottom: -15px;
+    left: 0;
+}
+.detailsOptions::before{
+    content: "";
+    position: absolute;
+    transition: left 0.4s ease;
+    width: 67px;
+    height: 3px;
+    bottom: -15.6px;
+    left: 0;
+    background-color: #1296d8;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+.selectedOption{
+    color: #1296d8 !important;
+}
+.detailsOptions:has(.overviewOption.selectedOption)::before{
+    left: 0px;
+}
+.detailsOptions:has(.featuresOption.selectedOption)::before{
+    left: 91px;
+    width: 64px;
+}
+.detailsOptions:has(.virtualTourOption.selectedOption)::before{
+    left: 180px;
+    width: 80px;
+}
+.homeDetails .aboutText{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #dcddde;
+    margin-bottom: 12px;
+}
+.homeDetails .detailsParagraph{
+    color: #5a727e;
+    margin-bottom: 30px;
+}
+.homeDetails .keyFeaturesText{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #dcddde;
+    margin-bottom: 12px;
+}
+.keyFeaturesArea{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 30px;
+    row-gap: 10px;
+    margin-bottom: 30px;
+}
+.keyFeature{
+    color: #777778;
+}
+.location .locationText{
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #dcddde;
+    margin-bottom: 12px;
+}
+.location .locationOnMap{
+    border-radius: 0.5rem;
+    width: 100%;
+    max-height: 600px;
+}
+.extraDetails{
+    background-color: #15222a;
+    border: 3px solid #1f2a31;
+    height: fit-content;
+    border-radius: 0.5rem;
+    padding: 22px 20px;
+    text-align: center;
+    display: grid;
+    align-items: center;
+}
+.extraDetails .price{
+    justify-self: start;
+    display: block;
+    font-weight: bold;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 20px;
+}
+.extraDetails .line{
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    height: 3px;
+    background-color: #222e35;
+    border-radius: 0.4rem;
+    left: 30px;
+    top: 70px;
+}
+.extraDetails .homeFeatures{
+    display: flex;
+    justify-content: space-between;
+    place-items: center;
+    padding: 15px;
+    font-size: 1.5rem;
+    color: white;
+}
+.extraDetails .homeFeatures>.homeFeature{
+    text-align: center;
+    width: 100%;
+}
+.extraDetails .smallBtn{
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 15px;
+}
+.extraDetails .contactBtn{
+    margin: 18px 0 12px;
+    background-color: #13a4ec;
+}
+.extraDetails .tourBtn{
+    margin-bottom: 15px;
+}
+.extraDetails .agentImage{
+    justify-self: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 25px 0;
+}
+.extraDetails .agentName{
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.shareSaveBtns{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.shareBtn{
+    padding: 10px 15px;
+}
+.loading{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media(max-width:1000px){
+.mainContainer{
+    padding: 0 20px 20px;
+}
+.body{
+    grid-template-columns: 1fr;
+}
+.homeDetails{
+    margin-right: 0;
+}
+}
+@media(max-width:440px){
+    .shareSaveBtns{
+        width: 120px;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -21,7 +22,7 @@ namespace WebApplication8.Services.Auth
             _Data = Data;
             _Configuration = configuration;
         }
-        public async Task<TokenResponseDTO> LoginAsync(HttpRequest request , loginDTO loginData)
+        public async Task<TokenResponseDTO> LoginAsync(HttpRequest request ,HttpResponse response, loginDTO loginData)
         {
             var user = await _Data.Users.FirstOrDefaultAsync(u => u.email == loginData.email);
             if(user == null || !BCrypt.Net.BCrypt.Verify(loginData.password , user.passwordHash))
@@ -40,7 +41,10 @@ namespace WebApplication8.Services.Auth
                 }
             }
 
-            return await calcTokens(user);
+            TokenResponseDTO tokens = await calcTokens(user);
+            TokenUtils.saveTokens(response, tokens);
+
+            return tokens;
         }
 
         private async Task<TokenResponseDTO> calcTokens(User user)

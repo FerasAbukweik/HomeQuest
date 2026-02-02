@@ -1,0 +1,42 @@
+.mainUserPageContainer{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 3fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    "sideBar header"
+    "sideBar body";
+    position: relative;
+}   
+:global(.globalDashboard),:global(.globalMyListings),
+:global(.globalAddNewListing),:global(.globalProfileContainer){
+    grid-area: body;
+}
+:global(.globaUserPageHeader){
+    grid-area: header;
+}
+:global(.globalUserPageSideBar){
+    grid-area: sideBar;
+}
+.showSideBarDiv{
+    position: absolute;
+    cursor: pointer;
+    appearance: none;
+    width: 40px;
+    height: 32px;
+    left: 15px;
+    top: 14px;
+    z-index: 101;
+}
+.mainUserPageContainer:has(.showSideBarDiv.showSideBar) :global(.globalUserPageSideBar) {
+    width: min(calc(100vw / 4) , 350px);
+    padding: 15px;
+    min-width: 230px;
+}
+.logoIcon{
+    transition: transform 0.85s ease;
+}
+.mainUserPageContainer:has(.showSideBarDiv.showSideBar) .logoIcon{
+    transform: rotate(360deg);
+}

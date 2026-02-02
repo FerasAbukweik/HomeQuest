@@ -147,7 +147,7 @@ namespace WebApplication8.Controllers
                     title = d.title,
                     address = d.address,
                     price = d.price,
-                    imageUrl = d.imagesUrls[0] ?? "noImage"
+                    imageUrl = d.imagesUrls.FirstOrDefault() ?? "noImage"
                 })
                 .ToListAsync();
             int currentTaken = currSectionPropertys.Count();
@@ -205,7 +205,7 @@ namespace WebApplication8.Controllers
                     title = d.title,
                     address = d.address,
                     price = d.price,
-                    imageUrl = d.imagesUrls[0] ?? "noImage",
+                    imageUrl = d.imagesUrls.FirstOrDefault() ?? "noImage",
                     state = d.state,
                 })
                 .ToListAsync();

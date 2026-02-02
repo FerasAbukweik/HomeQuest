@@ -1,0 +1,117 @@
+.sideBar {
+    overflow: hidden;
+    width: 0;
+    padding: 0;
+    min-width:0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-right: 2px solid #20343f;
+    height: 100%;
+    background-color: #101c22;
+    white-space: nowrap;
+    z-index: 100;
+    transition: width 0.3s ease-out, 
+        padding 0.3s ease-out, 
+        min-width 0.3s ease-out;
+}
+.body{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+}
+.body .option{
+    color: #7b96a3;
+    border-radius: 0.5rem;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.body .option:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.header .logoText{
+    margin-left: 40px;
+}
+.header{
+    position: relative;
+    margin-bottom: 20px;
+}
+.header::after{
+    content: "";
+    position: absolute;
+    width: calc(100% + 30px);
+    bottom: -20px;
+    left: -15px;
+    height: 2px;
+    background-color: #20343f;
+}
+.footer {
+    padding: 15px;
+    position: relative;
+}
+.footer::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 5px;
+    height: 2px;
+    background-color: #20343f;
+}
+.footer .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer .profileImg {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.footer .userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.footer .Name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #a4aaad;
+}
+
+.footer .email {
+    font-size: 12px;
+    opacity: 0.8;
+    color: #465e6a;
+}
+
+:global(#root:has(.globalDashboard)) .dashboardOptoin {
+    background-color: #172e3d;
+    color: #055086;
+}
+:global(#root:has(.globalMyListings)) .myListings {
+    background-color: #172e3d;
+    color: #055086;
+}
+:global(#root:has(.globalAddNewListing)) .addNewListing {
+    background-color: #172e3d;
+    color: #055086;
+}
+:global(#root:has(.globalProfileContainer)) .profile {
+    background-color: #172e3d;
+    color: #055086;
+}
+
+@media (max-width:550px){
+    .sideBar{
+        position: absolute;
+    }
+}

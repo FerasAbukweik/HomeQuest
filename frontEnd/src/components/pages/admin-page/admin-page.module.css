@@ -1,0 +1,191 @@
+.mainContainer{
+    width: 100%;
+    height: fit-content;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    --light-gray : #4f656e;
+    --border-color : #213945;
+    --off-white : #d3d5d6;
+    --dark-green: #0cb54c;
+    --dark-orange: #a05c20;
+    --light-blue : #127fb5;
+    --for-sales-progress : 25%;
+    --for-rent-progress : 50%;
+    --commercial-progress : 30%;
+    --land-progress : 20%;
+}
+.header{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 15px;
+}
+.header .topText{
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+.header .bottomText{
+    color: var(--light-gray);
+}
+.outlineContainer{
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 200px;
+}
+.outlineContainer .topText{
+    color: var(--off-white);
+}
+.outlineContainer .info{
+    color: white;
+}
+.outlineContainer .statue{
+    color: var(--dark-green);
+    font-size: 0.8rem;
+}
+.topRow{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.outlineContainer.PendingApprovals>.statue{
+    color: var(--dark-orange);
+}
+.bottomRow{
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+}
+.propertyListingsByCategory , .websiteTrafic{
+    flex: 1;
+    max-width: 500px;
+}
+.bottomRow .info{
+    font-size: 1.6rem;
+}
+.bottomRow .statue{
+    color: var(--light-gray);
+}
+.bottomRow .statue>.number{
+    color: var(--dark-green);
+    margin-left: 5px;
+}
+.propertyListingsByCategory .row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.propertyListingsByCategory .row .smallText{
+    color: var(--light-gray);
+}
+.propertyListingsByCategory .row .progressLine{
+    width: calc(100% - 100px);
+    background-color: #233c48;
+    height: 7px;
+    position: relative;
+    border-radius: 1rem;
+}
+.propertyListingsByCategory .row .progressLine::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: #13a4ec;
+    z-index: 1;
+    border-radius: inherit;
+}
+.propertyListingsByCategory .row.forSalses .progressLine::after{
+        width: var(--for-sales-progress);
+}
+.propertyListingsByCategory .row.forRent .progressLine::after{
+        width: var(--for-rent-progress);
+}
+.propertyListingsByCategory .row.commerecial .progressLine::after{
+        width: var(--commercial-progress);
+}
+.propertyListingsByCategory .row.land .progressLine::after{
+        width: var(--land-progress);
+}
+.bottomRow .progressLinesArea{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top:5px ;
+}
+.body{
+    flex: 1;
+    margin-bottom: 30px;
+}
+.footer{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.footer .title{
+    font-size: 1.2rem;
+    color: var(--off-white);
+    font-weight: bold;
+}
+.reportTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f1a1d;
+    outline: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 14px;
+    color: #e8f0f2;
+    white-space: nowrap;
+    max-width: 1015px;
+}
+thead th {
+    background: #102126;
+    color: #8fa3ad;
+    padding: 14px 12px;
+    text-align: left;
+}
+.reportTable tbody td {
+    padding: 14px 12px;
+    border-bottom: 2px solid var(--light-gray);
+    color: #dbe6ea;
+}
+.reportTable tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+.reportTable tbody tr td:nth-child(2) .reportText{
+    color: var(--light-blue);
+    cursor: pointer;
+}
+.reportTable tbody tr td:nth-child(2) .reportText:hover{
+    text-decoration: underline;
+}
+.reportTable thead tr th:last-child{
+    text-align: center;
+}
+.reportTable tbody tr td:last-child{
+    font-size: 0.95rem;
+    text-align: center;
+}
+.reportTable tbody tr td:last-child i:nth-child(1){
+    color: green;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.reportTable tbody tr td:last-child i:nth-child(2){
+    color: rgb(255, 66, 66);
+    transform: rotateY(180deg);
+    cursor: pointer;
+    margin-left: 5px;
+}
+.reportTable tbody tr td:last-child i:nth-child(2):hover , .reportTable tbody tr td:last-child i:nth-child(1):hover{
+    text-decoration: underline;
+}
+.reportTable tbody tr:last-child td{
+    border-bottom: none;
+}

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication8", "WebApplication8\WebApplication8.csproj", "{A501A3E7-3208-4F76-8298-CEEDE0B08383}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeQuest", "WebApplication8\HomeQuest.csproj", "{A501A3E7-3208-4F76-8298-CEEDE0B08383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

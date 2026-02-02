@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using System;
 using WebApplication8.Data;
 using WebApplication8.DTOs.AuthDTOs;
 using WebApplication8.DTOs.PropertyListing;
@@ -64,16 +65,9 @@ namespace WebApplication8.Controllers
                 password = signupData?.password ?? "",
             };
 
-            await _authServices.LoginAsync(Request , loginData);
+            var tokens = await _authServices.LoginAsync(Request ,Response, loginData);
 
             return Ok();
-
-            //return CreatedAtAction(
-            //    actionName: "GetUser",
-            //    controllerName: "Users",
-            //    routeValues: new { id = newUser.id },
-            //    value: newUser
-            //);
         }
 
         [Authorize]

@@ -7,6 +7,7 @@ using Scalar.AspNetCore;
 using System.Text;
 using WebApplication8;
 using WebApplication8.Data;
+using WebApplication8.Models.Token;
 using WebApplication8.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,13 +38,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         options.Events = new JwtBearerEvents
         {
-            OnMessageReceived = context =>
+            OnMessageReceived = async context =>
             {
+                var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthServices>();
+
                 if (context.Request.Cookies.TryGetValue(TokenUtils.AccessToken, out var token))
                 {
                     context.Token = token;
                 }
-                return Task.CompletedTask;
+                else if (context.Request.Cookies.TryGetValue(TokenUtils.RefreshToken, out var refreshToken))
+                {
+                    var tokens = await authService.RefreshTokensAsync(refreshToken);
+                    TokenUtils.saveTokens(context.Response, tokens);
+                    context.Token = tokens.accessToken;
+                }
             }
         };
     });
@@ -73,15 +81,15 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseMiddleware<MiddleWare>();
+app.UseHttpsRedirection();
 
 app.UseCors("AllowReact");
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<MiddleWare>();
 
 app.MapControllers();
 

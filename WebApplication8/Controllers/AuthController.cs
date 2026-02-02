@@ -1,11 +1,7 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApplication8.Data;
 using WebApplication8.DTOs.AuthDTOs;
-using WebApplication8.DTOs.RegisterDTOs;
-using WebApplication8.Models.API;
 using WebApplication8.Services.Auth;
 
 namespace WebApplication8.Controllers
@@ -27,22 +23,7 @@ namespace WebApplication8.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login([FromBody] loginDTO loginData)
         {
-            var tokens = await _authService.LoginAsync(Request , loginData);
-            CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.RefreshToken ,tokens.refreshToken , DateTime.UtcNow.AddDays(30));
-            CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.AccessToken ,tokens.accessToken, DateTime.UtcNow.AddMinutes(15));
-            return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpPost("RefreshTokens")]
-        public async Task<ActionResult<string>> RefreshTokens()
-        {
-            var refreshToken = Request.Cookies[TokenUtils.RefreshToken];
-            if(refreshToken == null)
-                return Unauthorized("no refresh token stored in http only cookies");
-            var tokens = await _authService.RefreshTokensAsync(refreshToken);
-            CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.RefreshToken, tokens.refreshToken, DateTime.UtcNow.AddDays(30));
-            CookiesUtils.SaveToHTTPOnlyCookie(Response , TokenUtils.AccessToken, tokens.accessToken, DateTime.UtcNow.AddMinutes(15));
+            var tokens = await _authService.LoginAsync(Request ,Response, loginData);
             return Ok();
         }
 

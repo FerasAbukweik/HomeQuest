@@ -1,0 +1,113 @@
+.topNav{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    padding: 0 30px;
+}
+.logo .logo-homequest-text{
+    font-size: 1rem;
+}
+.logo{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.logo .logoIcon {
+  font-size: 1.9rem;
+  margin-right: 8px;
+  color: #168ac3;
+}
+.midSection{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
+    color: #8f9597;
+}
+.buyBtn ,.rentBtn,.sellBtn{
+    cursor: pointer;
+}
+.buyBtn:hover ,.rentBtn:hover,.sellBtn:hover{
+    color: #168ac3;
+}
+.topNav .signupBtn{
+    color: #b5bcc0;
+    background-color: #003366;
+    margin-left: 5px;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 0.4rem;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.topNav .loginBtn{
+    margin-left: auto;
+    color: #b5bcc0;
+    background-color: #233c48;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 0.4rem;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.topNav::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #192c35;
+    bottom: -10px;
+    transform: translateX(-30px);
+}
+@media(max-width:830px){
+    .topNav .midSection{
+        gap: 15px;
+    }
+    .topNav{
+        padding: 0;
+    }
+    .topNav::after{
+        transform: translateX(0);
+    }
+}
+@media(max-width:600px){
+    .topNav .midSection{
+        display: none;
+    }
+}
+@media(max-width:440px){
+    .homeQuestText{
+        font-size: 1.2rem;
+    }
+    .signupBtn , .loginBtn{
+        font-size: 0.9rem !important;
+    }
+}
+@media(max-width: 380px){
+    .homeQuestText{
+        font-size: .85rem;
+    }
+    .signupBtn , .loginBtn{
+        font-size: 0.8rem !important;
+        padding: 8px 14px !important;
+    }
+}
+@media(max-width: 350px){
+    .homeQuestText{
+        font-size: .85rem;
+    }
+    .signupBtn , .loginBtn{
+        font-size: 0.7rem !important;
+        padding: 8px 10px !important;
+    }
+}
